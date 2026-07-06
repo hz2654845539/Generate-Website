@@ -150,13 +150,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (userObj == null) {
             throw new BusinessException(ErrorCode.OPERATION_ERROR, "用户未登录");
         }
-        // 移除登录态
+        // 移除登录态 USER_LOGIN_STATE
         request.getSession().removeAttribute(USER_LOGIN_STATE);
         return true;
     }
 
     @Override
-    public QueryWrapper getQueryWrapper(UserQueryRequest userQueryRequest) {
+    public QueryWrapper getQueryWrapper(UserQueryRequest userQueryRequest) { //impl是service具体的实现。前端请求的时候 Controller去调用此方法，把此方法的结果返回给Controller，Controller的结果再给前端。
         if (userQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为空");
         }
@@ -167,7 +167,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String userRole = userQueryRequest.getUserRole();
         String sortField = userQueryRequest.getSortField();
         String sortOrder = userQueryRequest.getSortOrder();
-        return QueryWrapper.create()
+        return QueryWrapper.create() //通过QueryWrapper对象来生成SQL查询，就不用自己拼接SQL
                 .eq("id", id) // where id = ${id}
                 .eq("userRole", userRole) // and userRole = ${userRole}
                 .like("userAccount", userAccount)
@@ -178,8 +178,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public String getEncryptPassword(String userPassword) {
-        // 盐值，混淆密码
-        final String SALT = "yupi";
+        // 盐值，混淆密码 添加其他调味使不容易破解。
+        final String SALT = "hz";
         return DigestUtils.md5DigestAsHex((userPassword + SALT).getBytes(StandardCharsets.UTF_8));
     }
 }

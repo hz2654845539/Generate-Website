@@ -11,13 +11,17 @@ import com.hz.hzaigeneratewebsite.exception.BusinessException;
 import com.hz.hzaigeneratewebsite.exception.ErrorCode;
 import com.hz.hzaigeneratewebsite.exception.ThrowUtils;
 import com.hz.hzaigeneratewebsite.model.dto.user.*;
-import com.hz.hzaigeneratewebsite.model.entity.User;
 import com.hz.hzaigeneratewebsite.model.vo.LoginUserVO;
 import com.hz.hzaigeneratewebsite.model.vo.UserVO;
-import com.hz.hzaigeneratewebsite.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.hz.hzaigeneratewebsite.model.entity.User;
+import com.hz.hzaigeneratewebsite.service.UserService;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -63,7 +67,6 @@ public class UserController {
         return ResultUtils.success(loginUserVO);
     }
 
-    //controller 返回脱敏信息给前端。 返回最终的数据给前端。 impl是实际的操作
     @GetMapping("/get/login")
     public BaseResponse<LoginUserVO> getLoginUser(HttpServletRequest request) {
         User loginUser = userService.getLoginUser(request);
