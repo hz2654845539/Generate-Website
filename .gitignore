@@ -1,3 +1,8 @@
+### CUSTOM ###  https://api.deepseek.com
+application-local.yml
+application-prod.yml
+tmp
+
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
